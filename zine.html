@@ -51,7 +51,7 @@
 
                 var PDFJS = window['pdfjs-dist/build/pdf'];
 
- //   url = "https://literacyfellows.github.io/zines/Archie%27s%20Feeling%20Down:%20Mental%20Health%20Awareness%20for%20Children.pdf"
+    url = "https://literacyfellows.github.io/zines/Archie%27s%20Feeling%20Down:%20Mental%20Health%20Awareness%20for%20Children.pdf"
     PDFJS.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
 
     var loadingTask = PDFJS.getDocument(url);
@@ -64,9 +64,10 @@
     for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
         pdf.getPage(pageNumber).then(function(page) {
 
-        var scale = 0.8;
-        var viewport = page.getViewport({ scale: scale });
-
+        var scale = window.innerHeight * 0.8 / page.getViewport({scale : 1.0} ).height;
+        
+        var viewport = page.getViewport( { scale: scale});
+        console.log(scale ) 
         var canvas = document.createElement('canvas');
         var div = document.createElement("div");
         div.width = viewport.width;
