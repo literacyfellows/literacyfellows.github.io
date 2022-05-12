@@ -35,7 +35,7 @@
         </style>
     </head>
     <body>
-        <div>Please allow a few moments for the zine to load</div>
+        <h1 id="loading">Please allow a few moments for the zine to load</h1>
         <div id="album">
          <div></div>
         </div>
@@ -45,84 +45,85 @@
         <script src="turn.min.js"></script>
         <script>
 
-            function organize (callback) {
-                var regex = new RegExp('[?&]' + "zine" + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(window.location.href);
+            var regex = new RegExp('[?&]' + "zine" + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(window.location.href);
+            var totalPages = 0;
             if (results && results[2]) {
                 var url = "zines/" + decodeURIComponent(results[2].replace(/\+/g, ' ')) + ".pdf";
 
                 var PDFJS = window['pdfjs-dist/build/pdf'];
 
-    //url = "https://literacyfellows.github.io/zines/Archie%27s%20Feeling%20Down:%20Mental%20Health%20Awareness%20for%20Children.pdf"
-    PDFJS.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
+             //   url = "https://literacyfellows.github.io/zines/Chesapeake%20Bay%20Alphabet.pdf"
+                PDFJS.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
 
-    var loadingTask = PDFJS.getDocument(url);
+                var loadingTask = PDFJS.getDocument(url);
 
-    loadingTask.promise.then(function(pdf) {
-        
-    var canvasdiv = document.getElementById('album');
-    var totalPages = pdf.numPages
+                loadingTask.promise.then(function(pdf) {
+                    
+                var canvasdiv = document.getElementById('album');
+                totalPages = pdf.numPages
+                $('loading').hide();
 
-    for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
-        pdf.getPage(pageNumber).then(function(page) {
+                for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+                    pdf.getPage(pageNumber).then(function(page) {
 
-        var scale = window.innerHeight * 0.8 / page.getViewport({scale : 1.0} ).height;
-        
-        var viewport = page.getViewport( { scale: scale});
-        console.log(scale ) 
-        var canvas = document.createElement('canvas');
-        var div = document.createElement("div");
-        div.width = viewport.width;
-        div.height = viewport.height;
-        div.appendChild(canvas);
-
-        // Prepare canvas using PDF page dimensions
-        var context = canvas.getContext('2d');
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-
-        document.getElementById("album").style.width = viewport.width * 2 + "px";
-        document.getElementById("album").style.height = viewport.height * 2 + "px";
-
-
-        console.log(document.getElementById("album").style.width + "; " + canvas.width);
-        // Render PDF page into canvas context
-        var renderContext = { canvasContext: context, viewport: viewport };
-
-        var renderTask = page.render(renderContext);
-        renderTask.promise.then(function() {
-
-        });
-        $('#album').turn('addPage', div, pageNumber);
-
-        });
-        
-    }
-
-    }, function(reason) {
-    // PDF loading error
-     $('body').prepend("<h1 style='color: red;'>Error: No PDF Found");
-        callback();
-        return;
-    });
-    $('#album').turn({gradients: true, acceleration: true}); 
+                    var scale = window.innerHeight * 0.8 / page.getViewport({scale : 1.0} ).height;
+                    
+                    var viewport = page.getViewport( { scale: scale});
  
-    } else {
-     $('body').prepend("<h1 style='color: red;'>Error: No PDF Found");
-       
-    }
-    callback();
-}
+                    var canvas = document.createElement('canvas');
+                    var div = document.createElement("div");
+                    div.width = viewport.width;
+                    div.height = viewport.height;
+                    div.appendChild(canvas);
 
-function finished() {
-    $('#loading').hide;
-}
+                    // Prepare canvas using PDF page dimensions
+                    var context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
 
-organize(finished);
+                    document.getElementById("album").style.width = viewport.width * 2 + "px";
+                    document.getElementById("album").style.height = viewport.height * 2 + "px";
 
-   
 
-           
+                    console.log(document.getElementById("album").style.width + "; " + canvas.width);
+                    // Render PDF page into canvas context
+                    var renderContext = { canvasContext: context, viewport: viewport };
+
+                    var renderTask = page.render(renderContext);
+                    renderTask.promise.then(function() {
+
+                    });
+                    $('#album').turn('addPage', div, pageNumber);
+
+                    });
+                    
+                }
+
+                }, function(reason) {
+                // PDF loading error
+                $('#loading').hide();
+                $('body').prepend("<h1 style='color: red;'>Error: No PDF Found");
+                    return;
+                });
+                $('#album').turn({gradients: true, acceleration: true}); 
+            } else {
+                $('#loading').hide();
+            $('body').prepend("<h1 style='color: red;'>Error: No PDF Found");
+            
+            }
+
+            function check() {
+                if (document.getElementById('loading').childElementCount + 1 >= totalPages) {
+                    window.setTimeout(check, 100);
+                    console.log(document.getElementById('loading').childElementCount + " ;; " + totalPages);
+                } else {
+                    $('#loading').hide();
+        
+                }
+            }
+
+            check();
         </script>
     </body>
 </html>
