@@ -27,9 +27,14 @@
                 size: 100%;
             }
           
+            #loading {
+                color: coral;
+                
+            }
         </style>
     </head>
     <body>
+        <h1 id="loading">Please allow a few moments for zine to load</h1>
         <div id="album">
          <div></div>
         </div>
@@ -95,7 +100,7 @@
         return;
     });
     $('#album').turn({gradients: true, acceleration: true}); 
-
+    $('#loading').hide()
     } else {
      $('body').prepend("<h1 style='color: red;'>Error: No PDF Found");
     }
