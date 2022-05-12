@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const line = document.createElement("a");
             line.href = "zine.html?zine=" + element;
             line.classList = "zine";
-          //  line.target = "_blank";
+            line.target = "_blank";
 
             line.style.color = textColors[count];
             line.style.textShadow = "2px 2px " + shadowColors[count];
