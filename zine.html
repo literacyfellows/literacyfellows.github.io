@@ -19,6 +19,7 @@
                 margin: 5% auto;
                 width: 80vw;
                 height: 80vh;
+             
             }
 
             #album .turn-page {
@@ -34,7 +35,6 @@
         </style>
     </head>
     <body>
-        <h1 id="loading">Please allow a few moments for zine to load</h1>
         <div id="album">
          <div></div>
         </div>
@@ -43,6 +43,7 @@
 
         <script src="turn.min.js"></script>
         <script>
+
                 var regex = new RegExp('[?&]' + "zine" + '(=([^&#]*)|&|#|$)'),
                 results = regex.exec(window.location.href);
             if (results && results[2]) {
@@ -50,6 +51,7 @@
 
                 var PDFJS = window['pdfjs-dist/build/pdf'];
 
+ //   url = "https://literacyfellows.github.io/zines/Archie%27s%20Feeling%20Down:%20Mental%20Health%20Awareness%20for%20Children.pdf"
     PDFJS.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
 
     var loadingTask = PDFJS.getDocument(url);
@@ -62,7 +64,7 @@
     for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
         pdf.getPage(pageNumber).then(function(page) {
 
-        var scale = 1;
+        var scale = 0.8;
         var viewport = page.getViewport({ scale: scale });
 
         var canvas = document.createElement('canvas');
@@ -100,11 +102,13 @@
         return;
     });
     $('#album').turn({gradients: true, acceleration: true}); 
-    $('#loading').hide()
+ 
     } else {
      $('body').prepend("<h1 style='color: red;'>Error: No PDF Found");
+       
     }
-    
+   
+
            
         </script>
     </body>
