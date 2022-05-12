@@ -17,57 +17,81 @@
 
             #album {
                 margin: 5% auto;
-                width: 600px;
-                height: 500px;
+                width: 75vw;
+                height: 80vh;
             }
 
             #album .turn-page {
                 -webkit-backgroud-size:100% 100%;
                 background-size: 100% 100%;
+                size: 100%;
             }
+          
         </style>
     </head>
     <body>
         <div id="album">
-
+         <div></div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.min.js" integrity="sha512-IM60GPudO4jk+ZQm3UlJgKHhXQi5pNDM6mP+pLKL968YgkHMc7He3aGJOVHEZ9rJ4vAaEtJ8W6SKa7Qq4inzBA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
 
         <script src="turn.min.js"></script>
         <script>
-
-            var regex = new RegExp('[?&]' + "zine" + '(=([^&#]*)|&|#|$)'),
+                var regex = new RegExp('[?&]' + "zine" + '(=([^&#]*)|&|#|$)'),
                 results = regex.exec(window.location.href);
             if (results && results[2]) {
-                var name = "zines/" + decodeURIComponent(results[2].replace(/\+/g, ' ')) + ".pdf";
-            
-    
-            var loadingTask = pdfjsLib.getDocument(name);
-            loadingTask.promise.then(function(pdf) {
-            for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
-                pdf.getPage(pageNumber).then(function(page) {
+                var url = "zines/" + decodeURIComponent(results[2].replace(/\+/g, ' ')) + ".pdf";
 
-                var canvas = document.createElement('canvas');
+    var PDFJS = window['pdfjs-dist/build/pdf'];
 
-                // Prepare canvas using PDF page dimensions
-                var context = canvas.getContext('2d');
+    PDFJS.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
 
-                // Render PDF page into canvas context
-                var renderContext = { canvasContext: context};
+    var loadingTask = PDFJS.getDocument(url);
 
-                var renderTask = page.render(renderContext);
-                renderTask.promise.then(function() {
-                    $("#album").append(canvas.toDataURL('image/png')) ;
-                
-            });
-        }); 
+    loadingTask.promise.then(function(pdf) {
+        
+    var canvasdiv = document.getElementById('album');
+    var totalPages = pdf.numPages
+
+    for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+        pdf.getPage(pageNumber).then(function(page) {
+
+        var scale = .8;
+        var viewport = page.getViewport({ scale: scale });
+
+        var canvas = document.createElement('canvas');
+        var div = document.createElement("div");
+        div.appendChild(canvas);
+        $('#album').turn('addPage', div, pageNumber);
+
+        // Prepare canvas using PDF page dimensions
+        var context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        // Render PDF page into canvas context
+        var renderContext = { canvasContext: context, viewport: viewport };
+
+        var renderTask = page.render(renderContext);
+        renderTask.promise.then(function() {
+
+        });
+        });
     }
-});
+
+    }, function(reason) {
+    // PDF loading error
+     $('body').prepend("<h1 style='color: red;'>Error: No PDF Found");
+        return;
+    });
+    $('#album').turn({gradients: true, acceleration: true}); 
+
     } else {
-        $('body').prepend("<h1 style='color: red;'>Error: No PDF Found");
+     $('body').prepend("<h1 style='color: red;'>Error: No PDF Found");
     }
-            $('#album').turn({gradients: true, acceleration: true});
+    
+           
         </script>
     </body>
 </html>
