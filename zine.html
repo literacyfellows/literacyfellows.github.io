@@ -64,7 +64,7 @@
     for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
         pdf.getPage(pageNumber).then(function(page) {
 
-        var scale = 1;
+        var scale = 0.8;
         var viewport = page.getViewport({ scale: scale });
 
         var canvas = document.createElement('canvas');
