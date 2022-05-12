@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=DotGothic16&family=Press+Start+2P&display=swap');
+body {
+   background-image: url('background.jpeg');
+}
+.title {
+    color: rgb(49 234 25 / 95%);
+    text-shadow: 1.5vw 1.5vw #61149f, 3vw 3vw #3a1557;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 5.5vw;
+    display: flex;
+    justify-content: center;
+    padding-top: 25px;
+    margin-bottom: 3px;
+    height: 8vw;
+}
+
+
+ @media screen and (max-width: 740px) {
+    div.options {
+      display: none;
+      flex-direction: column;
+      width: 194px !important; 
+      right:2.5vw; 
+      top:71px;
+    }
+
+    .show {
+        display:inline-block !important;
+        position: absolute;
+    }
+    .options a {
+      width: 170px !important;
+      justify-content: center !important;
+    }
+
+    div.hidden {
+        display:none;
+    }
+   
+    div.flex {
+        display: flex;
+    }
+ }
+ @media screen and (min-width: 741px) {
+     div.options #options{
+         display:flex;
+     }
+ }
+
+ .hidden {
+     display:flex;
+ }
+
+ .flex {
+     display: flex;
+ }
+
+ .show {
+     display: none;
+     right: 4vw;
+     background-color: #CFE8EF;
+     border-color: transparent !important;
+
+ }
+
+ header {
+    overflow: hidden;
+    padding: 10px 10px;
+    text-align: center;
+    margin: 0 auto;
+}
+  
+  .options a, .show {
+    float: left;
+    color: #dc4f10;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 24px; 
+    line-height: 25px;
+    border-radius: 40px;
+    font-family: 'DotGothic16', cursive;
+  }
+
+  .options a {
+    width: 19vw;
+  }
+  
+  .options a:hover, .show:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .options a.active {
+      text-shadow: 2px 2px orange;
+  }
+
+  .options {
+      border-radius: 40px;
+      display: flex;
+      justify-content: center;
+      width: 95vw;
+      margin-right: 2.5vw !important;
+      position: fixed;
+      
+  }
+
+  .zine {
+    float: left;
+    color: rgb(49 234 25 / 95%);
+    text-shadow: 2px 2px #246d2b;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 4vw;  
+    padding-bottom: 3vh;
+    border-radius: 40px;
+    margin-left: 5vw;
+    font-family:'DotGothic16', cursive;
+    clear: left;
+  }
+
+  .zine:hover {
+    background-color: #ffffffb8;
+  }
