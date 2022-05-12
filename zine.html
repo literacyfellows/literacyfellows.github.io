@@ -17,7 +17,7 @@
 
             #album {
                 margin: 5% auto;
-                width: 75vw;
+                width: 80vw;
                 height: 80vh;
             }
 
@@ -42,7 +42,7 @@
                 results = regex.exec(window.location.href);
             if (results && results[2]) {
                 var url = "zines/" + decodeURIComponent(results[2].replace(/\+/g, ' ')) + ".pdf";
-
+    url = "https://literacyfellows.github.io/zines/Archie%27s%20Feeling%20Down:%20Mental%20Health%20Awareness%20for%20Children.pdf"
     var PDFJS = window['pdfjs-dist/build/pdf'];
 
     PDFJS.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -57,19 +57,25 @@
     for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
         pdf.getPage(pageNumber).then(function(page) {
 
-        var scale = .8;
+        var scale = 1;
         var viewport = page.getViewport({ scale: scale });
 
         var canvas = document.createElement('canvas');
         var div = document.createElement("div");
+        div.width = viewport.width;
+        div.height = viewport.height;
         div.appendChild(canvas);
-        $('#album').turn('addPage', div, pageNumber);
 
         // Prepare canvas using PDF page dimensions
         var context = canvas.getContext('2d');
         canvas.height = viewport.height;
         canvas.width = viewport.width;
 
+        document.getElementById("album").style.width = viewport.width * 2 + "px";
+        document.getElementById("album").style.height = viewport.height * 2 + "px";
+
+
+        console.log(document.getElementById("album").style.width + "; " + canvas.width);
         // Render PDF page into canvas context
         var renderContext = { canvasContext: context, viewport: viewport };
 
@@ -77,7 +83,10 @@
         renderTask.promise.then(function() {
 
         });
+        $('#album').turn('addPage', div, pageNumber);
+
         });
+        
     }
 
     }, function(reason) {
