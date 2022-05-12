@@ -35,6 +35,7 @@
         </style>
     </head>
     <body>
+        <div>Please allow a few moments for the zine to load</div>
         <div id="album">
          <div></div>
         </div>
@@ -44,6 +45,7 @@
         <script src="turn.min.js"></script>
         <script>
 
+            function organize (callback) {
                 var regex = new RegExp('[?&]' + "zine" + '(=([^&#]*)|&|#|$)'),
                 results = regex.exec(window.location.href);
             if (results && results[2]) {
@@ -51,7 +53,7 @@
 
                 var PDFJS = window['pdfjs-dist/build/pdf'];
 
-    url = "https://literacyfellows.github.io/zines/Archie%27s%20Feeling%20Down:%20Mental%20Health%20Awareness%20for%20Children.pdf"
+    //url = "https://literacyfellows.github.io/zines/Archie%27s%20Feeling%20Down:%20Mental%20Health%20Awareness%20for%20Children.pdf"
     PDFJS.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
 
     var loadingTask = PDFJS.getDocument(url);
@@ -100,6 +102,7 @@
     }, function(reason) {
     // PDF loading error
      $('body').prepend("<h1 style='color: red;'>Error: No PDF Found");
+        callback();
         return;
     });
     $('#album').turn({gradients: true, acceleration: true}); 
@@ -108,6 +111,15 @@
      $('body').prepend("<h1 style='color: red;'>Error: No PDF Found");
        
     }
+    callback();
+}
+
+function finished() {
+    $('#loading').hide;
+}
+
+organize(finished);
+
    
 
            
