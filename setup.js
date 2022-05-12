@@ -43,11 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
             break;
         case 'creative':
        //     document.getElementById("title").textContent += " - Creative";
-            zines = [];
+            zines = ["Built by the Sea"];
             break;
         case 'environmental':
         //    document.getElementById("title").textContent += " - Environmental";
-            zines = ["Chesapeake Bay Alphabet"];
+            zines = ["Chesapeake Bay Alphabet", "Crab", "Living Sustainably"];
             break;
         case 'health': 
        //     document.getElementById("title").textContent += " - Health";
@@ -55,11 +55,11 @@ document.addEventListener("DOMContentLoaded", () => {
             break;
         case 'misc':
        //     document.getElementById("title").textContent += " - Miscellaneous";
-            zines = [];
+            zines = ["Critical Race Theory"];
             break;
         default: 
            // all zines... home
-           zines = ["Addams Family", "Archie's Feeling Down: Mental Health Awareness for Children", "Chesapeake Bay Alphabet", "Lego", "Moving", "Star Wars"]
+           zines = ["Addams Family", "Archie's Feeling Down: Mental Health Awareness for Children", "Built by the Sea", "Chesapeake Bay Alphabet", "Crab", "Critical Race Theory", "Lego", "Living Sustainably", "Moving", "Star Wars"]
 
     }
   
