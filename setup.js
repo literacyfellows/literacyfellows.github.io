@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             break;
         case 'creative':
        //     document.getElementById("title").textContent += " - Creative";
-            zines = ["Built by the Sea"];
+            zines = ["Built by the Sea", "DIN"];
             break;
         case 'environmental':
         //    document.getElementById("title").textContent += " - Environmental";
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
             break;
         default: 
            // all zines... home
-           zines = ["Addams Family", "Archie's Feeling Down: Mental Health Awareness for Children", "Built by the Sea", "Chesapeake Bay Alphabet", "Crab", "Critical Race Theory", "Lego", "Living Sustainably", "Moving", "Star Wars"]
+           zines = ["Addams Family", "Archie's Feeling Down: Mental Health Awareness for Children", "Built by the Sea", "Chesapeake Bay Alphabet", "Crab", "Critical Race Theory", "DIN", "Lego", "Living Sustainably", "Moving", "Star Wars"]
 
     }
   
